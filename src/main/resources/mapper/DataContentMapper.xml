@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.drc.dataClean.dao.DataContentMapper" >
-  <resultMap id="BaseResultMap" type="com.drc.dataClean.model.DataContent" >
+<mapper namespace="com.drcnet.mc.bigdata.bmap.dao.DataContentMapper" >
+  <resultMap id="BaseResultMap" type="com.drcnet.mc.bigdata.bmap.entity.DataContent" >
     <result column="url_id" property="urlId" jdbcType="INTEGER" />
     <result column="classify" property="classify" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
     <result column="titleShow" property="titleshow" jdbcType="VARCHAR" />
     <result column="hashcode" property="hashcode" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.drc.dataClean.model.DataContent" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.drcnet.mc.bigdata.bmap.entity.DataContent" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -55,7 +55,7 @@
   <sql id="Blob_Column_List" >
     content
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.drc.dataClean.model.DataContentExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.drcnet.mc.bigdata.bmap.entity.DataContentExample" >
     select
     <if test="distinct" >
       distinct
@@ -71,7 +71,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.drc.dataClean.model.DataContentExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.drcnet.mc.bigdata.bmap.entity.DataContentExample" >
     select
     <if test="distinct" >
       distinct
@@ -85,7 +85,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <insert id="insert" parameterType="com.drc.dataClean.model.DataContent" >
+  <insert id="insert" parameterType="com.drcnet.mc.bigdata.bmap.entity.DataContent" >
     insert into spider_2_ggzy_content (url_id, classify, title, 
       timeShow, stageName, platformNam, 
       classifySho, tradeShow, districtSho, 
@@ -97,7 +97,7 @@
       #{url,jdbcType=VARCHAR}, #{stageshow,jdbcType=VARCHAR}, #{titleshow,jdbcType=VARCHAR}, 
       #{hashcode,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.drc.dataClean.model.DataContent" >
+  <insert id="insertSelective" parameterType="com.drcnet.mc.bigdata.bmap.entity.DataContent" >
     insert into spider_2_ggzy_content
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="urlId != null" >
@@ -188,8 +188,8 @@
       </if>
     </trim>
   </insert>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
 
-  <select id="findList" resultMap="BaseResultMap">
-    select * from spider_2_ggzy_content limit 1000
+    select  * from spider_2_ggzy_content limit 10
   </select>
 </mapper>

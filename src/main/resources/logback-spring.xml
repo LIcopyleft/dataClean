@@ -1,71 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false">
-	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<!-- 控制台输出 -->
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <charset>UTF-8</charset> 
-			<!--格式化输出,%d:日期;%thread:线程名;%-5level：级别,从左显示5个字符宽度;%msg:日志消息;%n:换行符 -->
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -%msg%n</pattern>
+<configuration>
+	<!-- ch.qos.logback.core.ConsoleAppender 控制台输出 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<withJansi>true</withJansi>
+		<encoder>
+			<pattern>[traceId:%X{X-B3-TraceId},span_id:%X{X-B3-SpanId}] [%thread] %d{HH:mm:ss.SSS} %highlight(%-5level) %cyan(%logger{36}) - %msg %n</pattern>
 		</encoder>
 	</appender>
-	<!-- 按照每天生成日志文件 -->
-	<appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+	<springProperty scope="context" name="logPath" source="logging.path" defaultValue="logs"/>
+
+	<!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${logPath}/api-doc-service.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${LOG_PATH}/govDataClean-error.%d{yyyy-MM-dd}.log
+			<FileNamePattern>${logPath}/api-doc-service-%d{yyyy-MM-dd}-%i.log
 			</FileNamePattern>
-		</rollingPolicy> 
-        <encoder>  
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>  
-        </encoder>  
-        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->  
-            <level>ERROR</level>  
-            <onMatch>ACCEPT</onMatch>  
-            <onMismatch>DENY</onMismatch>  
-        </filter> 
-	</appender>
-	<appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${LOG_PATH}/govDataClean-access.%d{yyyy-MM-dd}.log
-			</FileNamePattern>
+			<MaxHistory>100</MaxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>50MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
-        <encoder>  
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>  
-        </encoder>  
-        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->  
-            <level>ACCESS</level>  
-            <onMatch>ACCEPT</onMatch>  
-            <onMismatch>DENY</onMismatch>  
-        </filter> 
-	</appender>
-	<appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${LOG_PATH}/govDataClean-info.%d{yyyy-MM-dd}.log
-			</FileNamePattern>
-		</rollingPolicy>
-        <encoder>  
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>  
-        </encoder>  
-        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->  
-            <level>INFO</level>  
-            <onMatch>ACCEPT</onMatch>  
-            <onMismatch>DENY</onMismatch>  
-        </filter> 
+		<encoder>
+			<pattern>[traceId:%X{X-B3-TraceId},span_id:%X{X-B3-SpanId}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n
+			</pattern>
+		</encoder>
 	</appender>
 
-	<!--myibatis log configure -->
-	<logger name="com.apache.ibatis" level="TRACE" />
-	<logger name="java.sql.Connection" level="DEBUG" />
-	<logger name="java.sql.Statement" level="DEBUG" />
-	<logger name="java.sql.PreparedStatement" level="DEBUG" />  
-	<!-- 日志输出级别 -->
-	<root level="INFO">
-		<appender-ref ref="STDOUT" />
-        <appender-ref ref="ERROR"/>  
-        <appender-ref ref="ACCESS"/>  
-        <appender-ref ref="INFO" />  
+	<springProfile name="!product">
+		<!-- 非生产环境：可以开启部分debug ERROR  DEBUG日志 -->
+		<logger name="com.drcnet.mc" level="DEBUG"/>
+	</springProfile>
+
+	<!-- root level：info 不可修改！ -->
+	<root level="info">
+		<appender-ref ref="file"/>
+		<appender-ref ref="console"/>
 	</root>
 </configuration>
