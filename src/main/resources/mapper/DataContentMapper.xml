@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.drc.dataClean.dao.DataContentMapper" >
+  <resultMap id="BaseResultMap" type="com.drc.dataClean.model.DataContent" >
+    <result column="url_id" property="urlId" jdbcType="INTEGER" />
+    <result column="classify" property="classify" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="timeShow" property="timeshow" jdbcType="DATE" />
+    <result column="stageName" property="stagename" jdbcType="VARCHAR" />
+    <result column="platformNam" property="platformnam" jdbcType="VARCHAR" />
+    <result column="classifySho" property="classifysho" jdbcType="VARCHAR" />
+    <result column="tradeShow" property="tradeshow" jdbcType="VARCHAR" />
+    <result column="districtSho" property="districtsho" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="stageShow" property="stageshow" jdbcType="VARCHAR" />
+    <result column="titleShow" property="titleshow" jdbcType="VARCHAR" />
+    <result column="hashcode" property="hashcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.drc.dataClean.model.DataContent" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    url_id, classify, title, timeShow, stageName, platformNam, classifySho, tradeShow, 
+    districtSho, url, stageShow, titleShow, hashcode
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.drc.dataClean.model.DataContentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from spider_2_ggzy_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.drc.dataClean.model.DataContentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from spider_2_ggzy_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.drc.dataClean.model.DataContent" >
+    insert into spider_2_ggzy_content (url_id, classify, title, 
+      timeShow, stageName, platformNam, 
+      classifySho, tradeShow, districtSho, 
+      url, stageShow, titleShow, 
+      hashcode, content)
+    values (#{urlId,jdbcType=INTEGER}, #{classify,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{timeshow,jdbcType=DATE}, #{stagename,jdbcType=VARCHAR}, #{platformnam,jdbcType=VARCHAR}, 
+      #{classifysho,jdbcType=VARCHAR}, #{tradeshow,jdbcType=VARCHAR}, #{districtsho,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{stageshow,jdbcType=VARCHAR}, #{titleshow,jdbcType=VARCHAR}, 
+      #{hashcode,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.drc.dataClean.model.DataContent" >
+    insert into spider_2_ggzy_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="urlId != null" >
+        url_id,
+      </if>
+      <if test="classify != null" >
+        classify,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="timeshow != null" >
+        timeShow,
+      </if>
+      <if test="stagename != null" >
+        stageName,
+      </if>
+      <if test="platformnam != null" >
+        platformNam,
+      </if>
+      <if test="classifysho != null" >
+        classifySho,
+      </if>
+      <if test="tradeshow != null" >
+        tradeShow,
+      </if>
+      <if test="districtsho != null" >
+        districtSho,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="stageshow != null" >
+        stageShow,
+      </if>
+      <if test="titleshow != null" >
+        titleShow,
+      </if>
+      <if test="hashcode != null" >
+        hashcode,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="urlId != null" >
+        #{urlId,jdbcType=INTEGER},
+      </if>
+      <if test="classify != null" >
+        #{classify,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="timeshow != null" >
+        #{timeshow,jdbcType=DATE},
+      </if>
+      <if test="stagename != null" >
+        #{stagename,jdbcType=VARCHAR},
+      </if>
+      <if test="platformnam != null" >
+        #{platformnam,jdbcType=VARCHAR},
+      </if>
+      <if test="classifysho != null" >
+        #{classifysho,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeshow != null" >
+        #{tradeshow,jdbcType=VARCHAR},
+      </if>
+      <if test="districtsho != null" >
+        #{districtsho,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="stageshow != null" >
+        #{stageshow,jdbcType=VARCHAR},
+      </if>
+      <if test="titleshow != null" >
+        #{titleshow,jdbcType=VARCHAR},
+      </if>
+      <if test="hashcode != null" >
+        #{hashcode,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findList" resultMap="BaseResultMap">
+    select * from spider_2_ggzy_content limit 1000
+  </select>
+</mapper>
