@@ -86,18 +86,18 @@ IP-CIDR,91.108.8.0/22,Outside
 IP-CIDR,91.108.16.0/22,Outside
 IP-CIDR,91.108.12.0/22,Outside
 IP-CIDR,149.154.160.0/20,Outside
-IP6-CIDR,2001:b28:f23d:f001::e/128,Outside
-IP6-CIDR,2001:67c:4e8:f002::e/128,Outside
-IP6-CIDR,2001:b28:f23d:f003::e/128,Outside
-IP6-CIDR,2001:b28:f23d:f001::a/128,Outside
-IP6-CIDR,2001:67c:4e8:f002::a/128,Outside
-IP6-CIDR,2001:b28:f23d:f003::a/128,Outside
-IP6-CIDR,2001:67c:4e8:f004::a/128,Outside
-IP6-CIDR,2001:b28:f23f:f005::a/128,Outside
-IP6-CIDR,2001:67c:4e8:fa60::/64,Outside
-IP6-CIDR,2001:b28:f23d::/48,Outside
-IP6-CIDR,2001:b28:f23f::/48,Outside
-IP6-CIDR,2001:67c:4e8::/48,Outside
+# IP6-CIDR,2001:b28:f23d:f001::e/128,Outside
+# IP6-CIDR,2001:67c:4e8:f002::e/128,Outside
+# IP6-CIDR,2001:b28:f23d:f003::e/128,Outside
+# IP6-CIDR,2001:b28:f23d:f001::a/128,Outside
+# IP6-CIDR,2001:67c:4e8:f002::a/128,Outside
+# IP6-CIDR,2001:b28:f23d:f003::a/128,Outside
+# IP6-CIDR,2001:67c:4e8:f004::a/128,Outside
+# IP6-CIDR,2001:b28:f23f:f005::a/128,Outside
+# IP6-CIDR,2001:67c:4e8:fa60::/64,Outside
+# IP6-CIDR,2001:b28:f23d::/48,Outside
+# IP6-CIDR,2001:b28:f23f::/48,Outside
+# IP6-CIDR,2001:67c:4e8::/48,Outside
 
 # > TikTok
 USER-AGENT,TikTok*,Outside
